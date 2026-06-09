@@ -1,0 +1,75 @@
+"use client";
+
+import Link from "next/link";
+import AuthWrapper from "@/components/auth/AuthWrapper";
+import { useState } from "react";
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    // Keep custom UI, but redirect to Clerk's hosted sign-in.
+    window.location.href = "/sign-in";
+  };
+
+  return (
+    <AuthWrapper title="Welcome back">
+      <div className="flex flex-col gap-5">
+        <div>
+          <label className="block text-sm mb-2 text-(--soft-text)">Email</label>
+
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm text-(--soft-text)">Password</label>
+
+            <Link
+              href="/forgot-password"
+              className="text-sm text-(--muted-text) hover:text-(--foreground)"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <button
+          onClick={handleLogin}
+          className="w-full bg-(--foreground) text-(--background) py-2 rounded-xl md:rounded-2xl lg:rounded-full font-semibold hover:opacity-90 transition mt-4"
+        >
+          Sign in
+        </button>
+
+        <p className=" text-sm text-(--muted-text)">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/register"
+            className="text-(--foreground) hover:underline"
+          >
+            Get access →
+          </Link>
+        </p>
+      </div>
+    </AuthWrapper>
+  );
+}

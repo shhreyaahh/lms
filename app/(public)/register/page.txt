@@ -1,0 +1,112 @@
+"use client";
+
+import Link from "next/link";
+import AuthWrapper from "@/components/auth/AuthWrapper";
+import { useState } from "react";
+
+import { useRouter } from "next/navigation";
+
+// Use Clerk's hosted UI for sign-up. This page keeps your custom look, but redirects on submit.
+
+export default function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const router = useRouter();
+
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+
+    // Keep custom UI, but use Clerk's /sign-up flow.
+    window.location.href = "/sign-up";
+  };
+
+  return (
+    <AuthWrapper title="Create your account">
+      <div className="flex flex-col gap-5">
+        <div>
+          <label className="block text-sm mb-2 text-(--soft-text)">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm mb-2 text-(--soft-text)">Email</label>
+
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm mb-2 text-(--soft-text)">
+            Password
+          </label>
+
+          <input
+            type="password"
+            placeholder="Create password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm mb-2 text-(--soft-text)">
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full rounded-xl bg-(--input-bg) border border-(--input-border) px-4 py-2 outline-none appearance-none focus:outline-none focus:ring-0 focus:border-(--foreground) transition text-sm"
+          />
+        </div>
+
+        <button
+          onClick={handleRegister}
+          className="w-full bg-(--foreground) text-(--background) py-2 rounded-xl md:rounded-2xl lg:rounded-full font-semibold hover:opacity-90 transition mt-4"
+        >
+          Create Account
+        </button>
+
+        <p className="text-sm text-(--muted-text)">
+          Already have an account?{" "}
+          <Link href="/sign-in" className="text-(--foreground) hover:underline">
+            Sign in →
+          </Link>
+        </p>
+      </div>
+    </AuthWrapper>
+  );
+}

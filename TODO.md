@@ -1,0 +1,5 @@
+- [ ] Extend Sanity queries to include image/category/level/slug for course listing and add course-by-slug query
+- [ ] Add getCourseBySlug(slug) in sanity data layer
+- [ ] Make ExploreCourses course cards clickable and link to /courses/[slug]
+- [ ] Create app/courses/[slug]/page.tsx that fetches course by slug and renders image/title/instructor/category/level/price/description
+- [ ] Verify TypeScript/build and run Next dev
